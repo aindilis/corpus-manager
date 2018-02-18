@@ -1,0 +1,19 @@
+#!/usr/bin/perl -w
+
+use CorpusManager;
+
+use UniLang::Agent::Agent;
+use UniLang::Util::Message;
+
+$UNIVERSAL::agent = UniLang::Agent::Agent->new
+  (Name => "Corpus-Manager",
+   ReceiveHandler => \&Receive);
+$UNIVERSAL::corpusmanager = CorpusManager->new();
+
+sub Receive {
+  my %args = @_;
+  $UNIVERSAL::corpusmanager->ProcessMessage
+    (Message => $args{Message});
+}
+
+$UNIVERSAL::corpusmanager->Execute();
